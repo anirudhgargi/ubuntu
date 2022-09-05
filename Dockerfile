@@ -7,17 +7,32 @@
 # Pull base image.
 FROM ubuntu:20.04
 
-# Install.
-RUN \
-  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
-  apt-get update && \
-  apt-get -y upgrade && \
-  apt-get install -y build-essential && \
-  apt-get install -y software-properties-common && \
-  apt-get install -y byobu curl git htop man unzip vim wget && \
-  apt-get -qq -y install wget python3 python3-pip python3-dev
-
-  rm -rf /var/lib/apt/lists/*
+RUN apt-get -qq -y update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -qq -y install \
+        gcc \
+        g++ \
+        zlibc \
+        zlib1g-dev \
+        libssl-dev \
+        libbz2-dev \
+        libsqlite3-dev \
+        libncurses5-dev \
+        libgdbm-dev \
+        libgdbm-compat-dev \
+        liblzma-dev \
+        libreadline-dev \
+        uuid-dev \
+        libffi-dev \
+        tk-dev \
+        wget \
+        curl \
+        git \
+        make \
+        sudo \
+        bash-completion \
+        tree \
+        vim \
+        software-properties-common
 
 # Add files.
 ADD root/.bashrc /root/.bashrc
@@ -32,6 +47,8 @@ ENV HOME /root
 
 # Define working directory.
 WORKDIR /root
+
+SHELL [ "/bin/bash", "-c" ]
 
 # Define default command.
 ENTRYPOINT ["tail", "-f", "/dev/null"]
