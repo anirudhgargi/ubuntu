@@ -5,7 +5,7 @@
 #
 
 # Pull base image.
-FROM ubuntu:14.04
+FROM ubuntu:20.04
 
 # Install.
 RUN \
@@ -15,12 +15,17 @@ RUN \
   apt-get install -y build-essential && \
   apt-get install -y software-properties-common && \
   apt-get install -y byobu curl git htop man unzip vim wget && \
+  apt-get -qq -y install wget python3 python3-pip python3-dev
+
   rm -rf /var/lib/apt/lists/*
 
 # Add files.
 ADD root/.bashrc /root/.bashrc
 ADD root/.gitconfig /root/.gitconfig
 ADD root/.scripts /root/.scripts
+
+#root user
+USER root
 
 # Set environment variables.
 ENV HOME /root
@@ -29,4 +34,4 @@ ENV HOME /root
 WORKDIR /root
 
 # Define default command.
-CMD ["bash"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]
