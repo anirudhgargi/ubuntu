@@ -40,15 +40,13 @@ ADD root/.gitconfig /root/.gitconfig
 ADD root/.scripts /root/.scripts
 
 #root user
-USER root
+#USER root
 
 # Set environment variables.
 ENV HOME /root
 
 # Define working directory.
 WORKDIR /root
-
-SHELL [ "/bin/bash", "-c" ]
 
 # Define default command.
 ENTRYPOINT ["tail", "-f", "/dev/null"]
